@@ -33,11 +33,6 @@ DRIVERFILES += %D%/usb_common.c
 %C%_libocdjtagdrivers_la_LIBADD += $(LIBUSB0_LIBS)
 endif
 
-if USE_LIBFTDI
-%C%_libocdjtagdrivers_la_CPPFLAGS += $(LIBFTDI_CFLAGS)
-%C%_libocdjtagdrivers_la_LIBADD += $(LIBFTDI_LIBS)
-endif
-
 if USE_LIBGPIOD
 %C%_libocdjtagdrivers_la_CPPFLAGS += $(LIBGPIOD_CFLAGS)
 %C%_libocdjtagdrivers_la_LIBADD += $(LIBGPIOD_LIBS)
@@ -73,9 +68,6 @@ endif
 if DUMMY
 DRIVERFILES += %D%/dummy.c
 endif
-if FTDI
-DRIVERFILES += %D%/ftdi.c %D%/mpsse.c
-endif
 if LINUXGPIOD
 DRIVERFILES += %D%/linuxgpiod.c
 endif
@@ -84,13 +76,6 @@ DRIVERFILES += %D%/jtag_vpi.c
 endif
 if JTAG_DPI
 DRIVERFILES += %D%/jtag_dpi.c
-endif
-if USB_BLASTER_DRIVER
-%C%_libocdjtagdrivers_la_LIBADD += %D%/usb_blaster/libocdusbblaster.la
-include %D%/usb_blaster/Makefile.am
-endif
-if FT232R
-DRIVERFILES += %D%/ft232r.c
 endif
 if AMTJTAGACCEL
 DRIVERFILES += %D%/amt_jtagaccel.c
@@ -107,29 +92,11 @@ endif
 if BITQ
 DRIVERFILES += %D%/bitq.c
 endif
-if PRESTO
-DRIVERFILES += %D%/presto.c
-endif
 if USBPROG
 DRIVERFILES += %D%/usbprog.c
 endif
 if RLINK
 DRIVERFILES += %D%/rlink.c %D%/rlink_speed_table.c
-endif
-if ULINK
-DRIVERFILES += %D%/ulink.c
-ulinkdir = $(pkgdatadir)/OpenULINK
-dist_ulink_DATA = $(ULINK_FIRMWARE)/ulink_firmware.hex
-%C%_libocdjtagdrivers_la_LIBADD += -lm
-endif
-if VSLLINK
-DRIVERFILES += %D%/versaloon/usbtoxxx/usbtogpio.c
-DRIVERFILES += %D%/versaloon/usbtoxxx/usbtojtagraw.c
-DRIVERFILES += %D%/versaloon/usbtoxxx/usbtoswd.c
-DRIVERFILES += %D%/versaloon/usbtoxxx/usbtopwr.c
-DRIVERFILES += %D%/versaloon/usbtoxxx/usbtoxxx.c
-DRIVERFILES += %D%/versaloon/versaloon.c
-DRIVERFILES += %D%/vsllink.c
 endif
 if ARMJTAGEW
 DRIVERFILES += %D%/arm-jtag-ew.c
@@ -152,12 +119,6 @@ endif
 if RSHIM
 DRIVERFILES += %D%/rshim.c
 endif
-if OSBDM
-DRIVERFILES += %D%/osbdm.c
-endif
-if OPENDOUS
-DRIVERFILES += %D%/opendous.c
-endif
 if SYSFSGPIO
 DRIVERFILES += %D%/sysfsgpio.c
 endif
@@ -167,18 +128,9 @@ endif
 if BCM2835GPIO
 DRIVERFILES += %D%/bcm2835gpio.c
 endif
-if OPENJTAG
-DRIVERFILES += %D%/openjtag.c
-endif
 if CMSIS_DAP_HID
 DRIVERFILES += %D%/cmsis_dap_usb_hid.c
 DRIVERFILES += %D%/cmsis_dap.c
-endif
-if CMSIS_DAP_USB
-DRIVERFILES += %D%/cmsis_dap_usb_bulk.c
-if !CMSIS_DAP_HID
-DRIVERFILES += %D%/cmsis_dap.c
-endif
 endif
 if IMX_GPIO
 DRIVERFILES += %D%/imx_gpio.c
@@ -189,15 +141,11 @@ endif
 if PICOPROBE
 DRIVERFILES += %D%/picoprobe.c
 endif
-if XDS110
-DRIVERFILES += %D%/xds110.c
-endif
 
 DRIVERHEADERS = \
 	%D%/bitbang.h \
 	%D%/bitq.h \
 	%D%/jtag_usb_common.h \
-	%D%/libftdi_helper.h \
 	%D%/libusb_helper.h \
 	%D%/cmsis_dap.h \
 	%D%/minidriver_imp.h \

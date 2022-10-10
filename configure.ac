@@ -1,5 +1,5 @@
 AC_PREREQ(2.64)
-AC_INIT([openocd], [0.11.0],
+AC_INIT([tinyocd], [0.11.0],
   [OpenOCD Mailing List <openocd-devel@lists.sourceforge.net>])
 AC_CONFIG_SRCDIR([src/openocd.c])
 AC_CONFIG_AUX_DIR([.])
@@ -111,19 +111,7 @@ m4_define([ADAPTER_VAR], [enable_[]ADAPTER_ARG($1)])
 m4_define([ADAPTER_OPT], [m4_translit(ADAPTER_ARG($1), [_], [-])])
 
 m4_define([USB1_ADAPTERS],
-	[[[ftdi], [MPSSE mode of FTDI based devices], [FTDI]],
-	[[picoprobe], [Raspberry Pi Pico Probe], [PICOPROBE]],
-	[[stlink], [ST-Link Programmer], [HLADAPTER_STLINK]],
-	[[ti_icdi], [TI ICDI JTAG Programmer], [HLADAPTER_ICDI]],
-	[[ulink], [Keil ULINK JTAG Programmer], [ULINK]],
-	[[usb_blaster_2], [Altera USB-Blaster II Compatible], [USB_BLASTER_2]],
-	[[ft232r], [Bitbang mode of FT232R based devices], [FT232R]],
-	[[vsllink], [Versaloon-Link JTAG Programmer], [VSLLINK]],
-	[[xds110], [TI XDS110 Debug Probe], [XDS110]],
-	[[cmsis_dap_v2], [CMSIS-DAP v2 Compliant Debugger], [CMSIS_DAP_USB]],
-	[[osbdm], [OSBDM (JTAG only) Programmer], [OSBDM]],
-	[[opendous], [eStick/opendous JTAG Programmer], [OPENDOUS]],
-	[[aice], [Andes JTAG Programmer], [AICE]]])
+	[[[picoprobe], [Raspberry Pi Pico Probe], [PICOPROBE]]])
 
 m4_define([USB0_ADAPTERS],
 	[[[usbprog], [USBProg JTAG Programmer], [USBPROG]],
@@ -136,13 +124,6 @@ m4_define([HIDAPI_ADAPTERS],
 
 m4_define([HIDAPI_USB1_ADAPTERS],
 	[[[kitprog], [Cypress KitProg Programmer], [KITPROG]]])
-
-m4_define([LIBFTDI_ADAPTERS],
-	[[[usb_blaster], [Altera USB-Blaster Compatible], [USB_BLASTER]],
-	[[presto], [ASIX Presto Adapter], [PRESTO]]])
-
-m4_define([LIBFTDI_USB1_ADAPTERS],
-	[[[openjtag], [OpenJTAG Adapter], [OPENJTAG]]])
 
 m4_define([LIBGPIOD_ADAPTERS],
 	[[[linuxgpiod], [Linux GPIO bitbang through libgpiod], [LINUXGPIOD]]])
@@ -249,13 +230,6 @@ m4_define([AC_ARG_ADAPTERS], [
 
 AC_ARG_ADAPTERS([
   USB1_ADAPTERS,
-  USB0_ADAPTERS,
-  HIDAPI_ADAPTERS,
-  HIDAPI_USB1_ADAPTERS,
-  LIBFTDI_ADAPTERS,
-  LIBFTDI_USB1_ADAPTERS
-  LIBGPIOD_ADAPTERS,
-  LIBJAYLINK_ADAPTERS
   ],[auto])
 
 AC_ARG_ENABLE([parport],
@@ -688,13 +662,6 @@ for hidapi_lib in hidapi hidapi-hidraw hidapi-libusb; do
 	])
 done
 
-PKG_CHECK_MODULES([LIBFTDI], [libftdi1], [
-	use_libftdi=yes
-	PKG_CHECK_EXISTS([libftdi1 >= 1.5],
-		[AC_DEFINE([HAVE_LIBFTDI_TCIOFLUSH], [1], [Define if your libftdi has ftdi_tcioflush()])])
-  ], [
-	PKG_CHECK_MODULES([LIBFTDI], [libftdi], [use_libftdi=yes], [use_libftdi=no])
-])
 
 PKG_CHECK_MODULES([LIBGPIOD], [libgpiod], [use_libgpiod=yes], [use_libgpiod=no])
 
@@ -726,8 +693,6 @@ PROCESS_ADAPTERS([USB1_ADAPTERS], ["x$use_libusb1" = "xyes"], [libusb-1.x])
 PROCESS_ADAPTERS([USB0_ADAPTERS], ["x$use_libusb0" = "xyes"], [libusb-0.1])
 PROCESS_ADAPTERS([HIDAPI_ADAPTERS], ["x$use_hidapi" = "xyes"], [hidapi])
 PROCESS_ADAPTERS([HIDAPI_USB1_ADAPTERS], ["x$use_hidapi" = "xyes" -a "x$use_libusb1" = "xyes"], [hidapi and libusb-1.x])
-PROCESS_ADAPTERS([LIBFTDI_ADAPTERS], ["x$use_libftdi" = "xyes"], [libftdi])
-PROCESS_ADAPTERS([LIBFTDI_USB1_ADAPTERS], ["x$use_libftdi" = "xyes" -a "x$use_libusb1" = "xyes"], [libftdi and libusb-1.x])
 PROCESS_ADAPTERS([LIBGPIOD_ADAPTERS], ["x$use_libgpiod" = "xyes"], [libgpiod])
 PROCESS_ADAPTERS([LIBJAYLINK_ADAPTERS], ["x$use_internal_libjaylink" = "xyes" -o "x$use_libjaylink" = "xyes"], [libjaylink-0.2])
 
@@ -791,7 +756,6 @@ AM_CONDITIONAL([IS_MINGW], [test "x$is_mingw" = "xyes"])
 AM_CONDITIONAL([IS_WIN32], [test "x$is_win32" = "xyes"])
 AM_CONDITIONAL([IS_DARWIN], [test "x$is_darwin" = "xyes"])
 AM_CONDITIONAL([BITQ], [test "x$build_bitq" = "xyes"])
-AM_CONDITIONAL([USE_LIBFTDI], [test "x$use_libftdi" = "xyes"])
 AM_CONDITIONAL([USE_LIBGPIOD], [test "x$use_libgpiod" = "xyes"])
 AM_CONDITIONAL([USE_HIDAPI], [test "x$use_hidapi" = "xyes"])
 AM_CONDITIONAL([USE_LIBJAYLINK], [test "x$use_libjaylink" = "xyes"])
@@ -867,8 +831,7 @@ echo
 echo OpenOCD configuration summary
 echo --------------------------------------------------
 m4_foreach([adapter], [USB1_ADAPTERS, USB0_ADAPTERS,
-	HIDAPI_ADAPTERS, HIDAPI_USB1_ADAPTERS, LIBFTDI_ADAPTERS,
-	LIBFTDI_USB1_ADAPTERS,
+	HIDAPI_ADAPTERS, HIDAPI_USB1_ADAPTERS,
 	LIBGPIOD_ADAPTERS,
 	LIBJAYLINK_ADAPTERS, PCIE_ADAPTERS,
 	OPTIONAL_LIBRARIES],

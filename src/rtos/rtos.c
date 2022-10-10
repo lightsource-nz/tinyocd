@@ -41,18 +41,6 @@ extern struct rtos_type hwthread_rtos;
 extern struct rtos_type riot_rtos;
 
 static struct rtos_type *rtos_types[] = {
-	&ThreadX_rtos,
-	&FreeRTOS_rtos,
-	&eCos_rtos,
-	&Linux_os,
-	&chibios_rtos,
-	&chromium_ec_rtos,
-	&embKernel_rtos,
-	&mqx_rtos,
-	&uCOS_III_rtos,
-	&nuttx_rtos,
-	&riot_rtos,
-	/* keep this as last, as it always matches with rtos auto */
 	&hwthread_rtos,
 	NULL
 };

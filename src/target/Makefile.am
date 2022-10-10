@@ -19,20 +19,8 @@ noinst_LTLIBRARIES += %D%/libtarget.la
 	$(ARMV6_SRC) \
 	$(ARMV7_SRC) \
 	$(ARM_MISC_SRC) \
-	$(AVR32_SRC) \
-	$(MIPS32_SRC) \
-	$(NDS32_SRC) \
-	$(STM8_SRC) \
-	$(INTEL_IA32_SRC) \
-	$(ESIRISC_SRC) \
-        $(ARC_SRC) \
-	%D%/avrt.c \
-	%D%/dsp563xx.c \
-	%D%/dsp563xx_once.c \
-	%D%/dsp5680xx.c \
 	%D%/hla_target.c \
-	$(ARMV8_SRC) \
-	$(MIPS64_SRC)
+	$(ARMV8_SRC)
 
 if HAVE_CAPSTONE
 %C%_libtarget_la_CPPFLAGS += $(CAPSTONE_CFLAGS)

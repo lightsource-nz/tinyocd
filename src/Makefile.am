@@ -1,41 +1,41 @@
-noinst_LTLIBRARIES += %D%/libopenocd.la
-bin_PROGRAMS += %D%/openocd
+noinst_LTLIBRARIES += %D%/libocd.la
+bin_PROGRAMS += %D%/tinyocd
 
-%C%_openocd_SOURCES = \
+%C%_tinyocd_SOURCES = \
 	%D%/main.c
 
-%C%_libopenocd_la_SOURCES = \
+%C%_libocd_la_SOURCES = \
 	%D%/hello.c %D%/hello.h \
 	%D%/openocd.c %D%/openocd.h
 
-%C%_openocd_LDADD = %D%/libopenocd.la
+%C%_tinyocd_LDADD = %D%/libocd.la
 
-%C%_openocd_LDADD += $(MINGWLDADD)
+%C%_tinyocd_LDADD += $(MINGWLDADD)
 
 if INTERNAL_JIMTCL
-%C%_openocd_LDADD += $(top_builddir)/jimtcl/libjim.a
+%C%_tinyocd_LDADD += $(top_builddir)/jimtcl/libjim.a
 else
-%C%_openocd_LDADD += -ljim
+%C%_tinyocd_LDADD += -ljim
 endif
 
-%C%_libopenocd_la_CPPFLAGS =
+%C%_libocd_la_CPPFLAGS =
 
 # banner output includes RELSTR appended to $VERSION from the configure script
 # guess-rev.sh returns either a repository version ID or "-snapshot"
 if RELEASE
-%C%_libopenocd_la_CPPFLAGS += -DRELSTR=\"\"
-%C%_libopenocd_la_CPPFLAGS += -DGITVERSION=\"\"
+%C%_libocd_la_CPPFLAGS += -DRELSTR=\"\"
+%C%_libocd_la_CPPFLAGS += -DGITVERSION=\"\"
 else
-%C%_libopenocd_la_CPPFLAGS += -DRELSTR=\"`$(top_srcdir)/guess-rev.sh $(top_srcdir)`\"
-%C%_libopenocd_la_CPPFLAGS += -DGITVERSION=\"`cd $(top_srcdir) && git describe`\"
-%C%_libopenocd_la_CPPFLAGS += -DPKGBLDDATE=\"`date +%F-%R`\"
+%C%_libocd_la_CPPFLAGS += -DRELSTR=\"`$(top_srcdir)/guess-rev.sh $(top_srcdir)`\"
+%C%_libocd_la_CPPFLAGS += -DGITVERSION=\"`cd $(top_srcdir) && git describe`\"
+%C%_libocd_la_CPPFLAGS += -DPKGBLDDATE=\"`date +%F-%R`\"
 endif
 
 # add default CPPFLAGS
-%C%_libopenocd_la_CPPFLAGS += $(AM_CPPFLAGS) $(CPPFLAGS)
+%C%_libocd_la_CPPFLAGS += $(AM_CPPFLAGS) $(CPPFLAGS)
 
 # the library search path.
-%C%_libopenocd_la_LDFLAGS = $(all_libraries)
+%C%_libocd_la_LDFLAGS = $(all_libraries)
 
 if IS_MINGW
 MINGWLDADD = -lws2_32
@@ -43,18 +43,16 @@ else
 MINGWLDADD =
 endif
 
-%C%_libopenocd_la_LIBADD = \
+%C%_libocd_la_LIBADD = \
 	%D%/xsvf/libxsvf.la \
 	%D%/svf/libsvf.la \
-	%D%/pld/libpld.la \
 	%D%/jtag/libjtag.la \
 	%D%/transport/libtransport.la \
 	%D%/flash/libflash.la \
 	%D%/target/libtarget.la \
 	%D%/server/libserver.la \
 	%D%/rtos/librtos.la \
-	%D%/helper/libhelper.la \
-	%D%/rtt/librtt.la
+	%D%/helper/libhelper.la
 
 BIN2C = $(srcdir)/%D%/helper/bin2char.sh
 
@@ -83,5 +81,5 @@ include %D%/target/Makefile.am
 include %D%/rtos/Makefile.am
 include %D%/server/Makefile.am
 include %D%/flash/Makefile.am
-include %D%/pld/Makefile.am
-include %D%/rtt/Makefile.am
+#include %D%/pld/Makefile.am
+#include %D%/rtt/Makefile.am
