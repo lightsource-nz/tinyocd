@@ -681,17 +681,17 @@ int server_preinit(void)
 
 int server_init(struct command_context *cmd_ctx)
 {
-	int ret = tcl_init();
+//	int ret = tcl_init();
 
-	if (ret != ERROR_OK)
-		return ret;
+//	if (ret != ERROR_OK)
+//		return ret;
 
-	ret = telnet_init("Open On-Chip Debugger");
+//	ret = telnet_init("Open On-Chip Debugger");
 
-	if (ret != ERROR_OK) {
-		remove_services();
-		return ret;
-	}
+//	if (ret != ERROR_OK) {
+//		remove_services();
+//		return ret;
+//	}
 
 	return ERROR_OK;
 }
@@ -713,9 +713,9 @@ int server_quit(void)
 
 void server_free(void)
 {
-	tcl_service_free();
-	telnet_service_free();
-	jsp_service_free();
+//	tcl_service_free();
+//	telnet_service_free();
+//	jsp_service_free();
 
 	free(bindto_name);
 }
@@ -822,17 +822,17 @@ static const struct command_registration server_command_handlers[] = {
 
 int server_register_commands(struct command_context *cmd_ctx)
 {
-	int retval = telnet_register_commands(cmd_ctx);
-	if (ERROR_OK != retval)
-		return retval;
+//	int retval = telnet_register_commands(cmd_ctx);
+//	if (ERROR_OK != retval)
+//		return retval;
 
-	retval = tcl_register_commands(cmd_ctx);
-	if (ERROR_OK != retval)
-		return retval;
+//	retval = tcl_register_commands(cmd_ctx);
+//	if (ERROR_OK != retval)
+//		return retval;
 
-	retval = jsp_register_commands(cmd_ctx);
-	if (ERROR_OK != retval)
-		return retval;
+//	retval = jsp_register_commands(cmd_ctx);
+//	if (ERROR_OK != retval)
+//		return retval;
 
 	return register_commands(cmd_ctx, NULL, server_command_handlers);
 }
