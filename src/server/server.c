@@ -29,10 +29,10 @@
 #include "server.h"
 #include <target/target.h>
 #include <target/target_request.h>
-#include <target/openrisc/jsp_server.h>
+//#include <target/openrisc/jsp_server.h>
 #include "openocd.h"
-#include "tcl_server.h"
-#include "telnet_server.h"
+//#include "tcl_server.h"
+//#include "telnet_server.h"
 
 #include <signal.h>
 
