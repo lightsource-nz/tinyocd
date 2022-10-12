@@ -733,18 +733,18 @@ static void gdb_signal_reply(struct target *target, struct connection *connectio
 	int sig_reply_len;
 	int signal_var;
 
-//	rtos_update_threads(target);
+	rtos_update_threads(target);
 
 	if (target->debug_reason == DBG_REASON_EXIT) {
 		sig_reply_len = snprintf(sig_reply, sizeof(sig_reply), "W00");
 	} else {
 		struct target *ct;
-//		if (target->rtos != NULL) {
-//			target->rtos->current_threadid = target->rtos->current_thread;
-//			target->rtos->gdb_target_for_threadid(connection, target->rtos->current_threadid, &ct);
-//		} else {
+		if (target->rtos != NULL) {
+			target->rtos->current_threadid = target->rtos->current_thread;
+			target->rtos->gdb_target_for_threadid(connection, target->rtos->current_threadid, &ct);
+		} else {
 			ct = target;
-//		}
+		}
 
 		if (gdb_connection->ctrl_c) {
 			signal_var = 0x2;
@@ -876,7 +876,7 @@ static void gdb_fileio_reply(struct target *target, struct connection *connectio
 		target_resume(target, 1, 0x0, 0, 0);
 	} else {
 		gdb_connection->frontend_state = TARGET_HALTED;
-		//rtos_update_threads(target);
+		rtos_update_threads(target);
 	}
 }
 
@@ -981,16 +981,16 @@ static int gdb_new_connection(struct connection *connection)
 		gdb_putback_char(connection, initial_ack);
 	target_call_event_callbacks(target, TARGET_EVENT_GDB_ATTACH);
 
-/*
+
 	if (target->rtos) {
-		 clean previous rtos session if supported
+		// clean previous rtos session if supported
 		if (target->rtos->type->clean)
 			target->rtos->type->clean(target);
 
-		 update threads 
+		// update threads 
 		rtos_update_threads(target);
 	}
-*/
+
 
 	if (gdb_use_memory_map) {
 		/* Connect must fail if the memory map can't be set up correctly.
@@ -1182,8 +1182,8 @@ static int gdb_get_registers_packet(struct connection *connection,
 	LOG_DEBUG("-");
 #endif
 
-//	if ((target->rtos != NULL) && (ERROR_OK == rtos_get_gdb_reg_list(connection)))
-//		return ERROR_OK;
+	if ((target->rtos != NULL) && (ERROR_OK == rtos_get_gdb_reg_list(connection)))
+		return ERROR_OK;
 
 	retval = target_get_gdb_reg_list(target, &reg_list, &reg_list_size,
 			REG_CLASS_GENERAL);
@@ -1312,8 +1312,8 @@ static int gdb_get_register_packet(struct connection *connection,
 	LOG_DEBUG("-");
 #endif
 
-//	if ((target->rtos != NULL) && (ERROR_OK == rtos_get_gdb_reg(connection, reg_num)))
-//		return ERROR_OK;
+	if ((target->rtos != NULL) && (ERROR_OK == rtos_get_gdb_reg(connection, reg_num)))
+		return ERROR_OK;
 
 	retval = target_get_gdb_reg_list_noread(target, &reg_list, &reg_list_size,
 			REG_CLASS_ALL);
@@ -1368,12 +1368,12 @@ static int gdb_set_register_packet(struct connection *connection,
 	uint8_t *bin_buf = malloc(chars / 2);
 	gdb_target_to_reg(target, separator + 1, chars, bin_buf);
 
-//	if ((target->rtos != NULL) &&
-//			(ERROR_OK == rtos_set_reg(connection, reg_num, bin_buf))) {
-//		free(bin_buf);
-//		gdb_put_packet(connection, "OK", 2);
-//		return ERROR_OK;
-//	}
+	if ((target->rtos != NULL) &&
+			(ERROR_OK == rtos_set_reg(connection, reg_num, bin_buf))) {
+		free(bin_buf);
+		gdb_put_packet(connection, "OK", 2);
+		return ERROR_OK;
+	}
 
 	retval = target_get_gdb_reg_list_noread(target, &reg_list, &reg_list_size,
 			REG_CLASS_ALL);
@@ -2786,21 +2786,19 @@ static bool gdb_handle_vcont_packet(struct connection *connection, const char *p
 				packet_size -= endp - parse;
 				parse = endp;
 			}
-/*
 			if (target->rtos != NULL) {
-				 FIXME: why is this necessary? rtos state should be up-to-date here already! 
+				// FIXME: why is this necessary? rtos state should be up-to-date here already! 
 				rtos_update_threads(target);
 
 				target->rtos->gdb_target_for_threadid(connection, thread_id, &ct);
 
 				
-				 * check if the thread to be stepped is the current rtos thread
-				 * if not, we must fake the step
+				 /* check if the thread to be stepped is the current rtos thread
+				 * if not, we must fake the step */
 				 
 				if (target->rtos->current_thread != thread_id)
 					fake_step = true;
 			}
-*/
 			if (parse[0] == ';') {
 				++parse;
 				--packet_size;
