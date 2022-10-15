@@ -34,9 +34,9 @@
 #include <helper/util.h>
 #include <helper/configuration.h>
 #include <flash/nor/core.h>
-#include <flash/nand/core.h>
+//#include <flash/nand/core.h>
 //#include <pld/pld.h>
-#include <target/arm_cti.h>
+//#include <target/arm_cti.h>
 #include <target/arm_adi_v5.h>
 //#include <rtt/rtt.h>
 
@@ -166,8 +166,8 @@ COMMAND_HANDLER(handle_init_command)
 	if (command_run_line(CMD_CTX, "flash init") != ERROR_OK)
 		return ERROR_FAIL;
 
-	if (command_run_line(CMD_CTX, "nand init") != ERROR_OK)
-		return ERROR_FAIL;
+	//if (command_run_line(CMD_CTX, "nand init") != ERROR_OK)
+	//	return ERROR_FAIL;
 
 	/*
 	if (command_run_line(CMD_CTX, "pld init") != ERROR_OK)
@@ -252,8 +252,8 @@ static struct command_context *setup_command_handler(Jim_Interp *interp)
 		&interface_register_commands,
 		&target_register_commands,
 		&flash_register_commands,
-		&nand_register_commands,
-		&cti_register_commands,
+//		&nand_register_commands,
+//		&cti_register_commands,
 		&dap_register_commands,
 		NULL
 	};
@@ -363,7 +363,7 @@ int openocd_main(int argc, char *argv[])
 
 	/* free all DAP and CTI objects */
 	dap_cleanup_all();
-	arm_cti_cleanup_all();
+//	arm_cti_cleanup_all();
 
 	adapter_quit();
 

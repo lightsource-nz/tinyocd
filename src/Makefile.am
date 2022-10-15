@@ -44,8 +44,6 @@ MINGWLDADD =
 endif
 
 %C%_libocd_la_LIBADD = \
-	%D%/xsvf/libxsvf.la \
-	%D%/svf/libsvf.la \
 	%D%/jtag/libjtag.la \
 	%D%/transport/libtransport.la \
 	%D%/flash/libflash.la \

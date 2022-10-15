@@ -1966,23 +1966,23 @@ unsigned jtag_get_ntrst_assert_width(void)
 
 static int jtag_select(struct command_context *ctx)
 {
-	int retval;
+//	int retval;
 
 	/* NOTE:  interface init must already have been done.
 	 * That works with only C code ... no Tcl glue required.
 	 */
 
-	retval = jtag_register_commands(ctx);
+	return jtag_register_commands(ctx);
 
-	if (retval != ERROR_OK)
-		return retval;
+//	if (retval != ERROR_OK)
+//		return retval;
 
-	retval = svf_register_commands(ctx);
+//	retval = svf_register_commands(ctx);
 
-	if (retval != ERROR_OK)
-		return retval;
+//	if (retval != ERROR_OK)
+//		return retval;
 
-	return xsvf_register_commands(ctx);
+//	return xsvf_register_commands(ctx);
 }
 
 static struct transport jtag_transport = {

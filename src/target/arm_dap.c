@@ -121,8 +121,8 @@ static int dap_init_all(void)
 		struct adiv5_dap *dap = &obj->dap;
 
 		/* with hla, dap is just a dummy */
-		if (transport_is_hla())
-			continue;
+//		if (transport_is_hla())
+//			continue;
 
 		/* skip taps that are disabled */
 		if (!dap->tap->enabled)
@@ -142,12 +142,12 @@ static int dap_init_all(void)
 			if (retval != ERROR_OK)
 				return retval;
 			obj->driver = adapter_driver->swd_ops;
-		} else if (transport_is_dapdirect_swd()) {
-			dap->ops = adapter_driver->dap_swd_ops;
-		} else if (transport_is_dapdirect_jtag()) {
-			dap->ops = adapter_driver->dap_jtag_ops;
-		} else
-			dap->ops = &jtag_dp_ops;
+//		} else if (transport_is_dapdirect_swd()) {
+//			dap->ops = adapter_driver->dap_swd_ops;
+//		} else if (transport_is_dapdirect_jtag()) {
+//			dap->ops = adapter_driver->dap_jtag_ops;
+		} //else
+//			dap->ops = &jtag_dp_ops;
 
 		retval = dap->ops->connect(dap);
 		if (retval != ERROR_OK)
@@ -285,8 +285,8 @@ static int dap_create(Jim_GetOptInfo *goi)
 	};
 
 	/* don't expose the instance commands when using hla */
-	if (transport_is_hla())
-		dap_commands[0].chain = NULL;
+//	if (transport_is_hla())
+//		dap_commands[0].chain = NULL;
 
 	e = register_commands(cmd_ctx, NULL, dap_commands);
 	if (ERROR_OK != e)

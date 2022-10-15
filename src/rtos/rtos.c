@@ -27,18 +27,18 @@
 #include "server/gdb_server.h"
 
 /* RTOSs */
-extern struct rtos_type FreeRTOS_rtos;
-extern struct rtos_type ThreadX_rtos;
-extern struct rtos_type eCos_rtos;
-extern struct rtos_type Linux_os;
-extern struct rtos_type chibios_rtos;
-extern struct rtos_type chromium_ec_rtos;
-extern struct rtos_type embKernel_rtos;
-extern struct rtos_type mqx_rtos;
-extern struct rtos_type uCOS_III_rtos;
-extern struct rtos_type nuttx_rtos;
+//extern struct rtos_type FreeRTOS_rtos;
+//extern struct rtos_type ThreadX_rtos;
+//extern struct rtos_type eCos_rtos;
+//extern struct rtos_type Linux_os;
+//extern struct rtos_type chibios_rtos;
+//extern struct rtos_type chromium_ec_rtos;
+//extern struct rtos_type embKernel_rtos;
+//extern struct rtos_type mqx_rtos;
+//extern struct rtos_type uCOS_III_rtos;
+//extern struct rtos_type nuttx_rtos;
 extern struct rtos_type hwthread_rtos;
-extern struct rtos_type riot_rtos;
+//extern struct rtos_type riot_rtos;
 
 static struct rtos_type *rtos_types[] = {
 	&hwthread_rtos,

@@ -74,59 +74,59 @@ static int target_gdb_fileio_end_default(struct target *target, int retcode,
 		int fileio_errno, bool ctrl_c);
 
 /* targets */
-extern struct target_type arm7tdmi_target;
-extern struct target_type arm720t_target;
-extern struct target_type arm9tdmi_target;
-extern struct target_type arm920t_target;
-extern struct target_type arm966e_target;
-extern struct target_type arm946e_target;
-extern struct target_type arm926ejs_target;
-extern struct target_type fa526_target;
-extern struct target_type feroceon_target;
-extern struct target_type dragonite_target;
-extern struct target_type xscale_target;
+//extern struct target_type arm7tdmi_target;
+//extern struct target_type arm720t_target;
+//extern struct target_type arm9tdmi_target;
+//extern struct target_type arm920t_target;
+//extern struct target_type arm966e_target;
+//extern struct target_type arm946e_target;
+//extern struct target_type arm926ejs_target;
+//extern struct target_type fa526_target;
+//extern struct target_type feroceon_target;
+//extern struct target_type dragonite_target;
+//extern struct target_type xscale_target;
 extern struct target_type cortexm_target;
-extern struct target_type cortexa_target;
-extern struct target_type aarch64_target;
-extern struct target_type cortexr4_target;
-extern struct target_type arm11_target;
-extern struct target_type ls1_sap_target;
-extern struct target_type mips_m4k_target;
-extern struct target_type mips_mips64_target;
-extern struct target_type avr_target;
-extern struct target_type dsp563xx_target;
-extern struct target_type dsp5680xx_target;
-extern struct target_type testee_target;
-extern struct target_type avr32_ap7k_target;
-extern struct target_type hla_target;
-extern struct target_type nds32_v2_target;
-extern struct target_type nds32_v3_target;
-extern struct target_type nds32_v3m_target;
-extern struct target_type or1k_target;
-extern struct target_type quark_x10xx_target;
-extern struct target_type quark_d20xx_target;
-extern struct target_type stm8_target;
-extern struct target_type riscv_target;
+//extern struct target_type cortexa_target;
+//extern struct target_type aarch64_target;
+//extern struct target_type cortexr4_target;
+//extern struct target_type arm11_target;
+//extern struct target_type ls1_sap_target;
+//extern struct target_type mips_m4k_target;
+//extern struct target_type mips_mips64_target;
+//extern struct target_type avr_target;
+//extern struct target_type dsp563xx_target;
+//extern struct target_type dsp5680xx_target;
+//extern struct target_type testee_target;
+//extern struct target_type avr32_ap7k_target;
+//extern struct target_type hla_target;
+//extern struct target_type nds32_v2_target;
+//extern struct target_type nds32_v3_target;
+//extern struct target_type nds32_v3m_target;
+//extern struct target_type or1k_target;
+//extern struct target_type quark_x10xx_target;
+//extern struct target_type quark_d20xx_target;
+//extern struct target_type stm8_target;
+//extern struct target_type riscv_target;
 extern struct target_type mem_ap_target;
-extern struct target_type esirisc_target;
-extern struct target_type arcv2_target;
+//extern struct target_type esirisc_target;
+//extern struct target_type arcv2_target;
 
 static struct target_type *target_types[] = {
-	&arm7tdmi_target,
-	&arm9tdmi_target,
-	&arm920t_target,
-	&arm720t_target,
-	&arm966e_target,
-	&arm946e_target,
-	&arm926ejs_target,
-	&xscale_target,
+//	&arm7tdmi_target,
+//	&arm9tdmi_target,
+//	&arm920t_target,
+//	&arm720t_target,
+//	&arm966e_target,
+//	&arm946e_target,
+//	&arm926ejs_target,
+//	&xscale_target,
 	&cortexm_target,
-	&cortexa_target,
-	&cortexr4_target,
-	&arm11_target,
-	&hla_target,
+//	&cortexa_target,
+//	&cortexr4_target,
+//	&arm11_target,
+//	&hla_target,
 	&mem_ap_target,
-	&aarch64_target,
+//	&aarch64_target,
 	NULL,
 };
 

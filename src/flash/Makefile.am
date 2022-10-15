@@ -3,10 +3,8 @@ noinst_LTLIBRARIES += %D%/libflash.la
 	%D%/common.c %D%/common.h
 
 %C%_libflash_la_LIBADD = \
-	%D%/nor/libocdflashnor.la \
-	%D%/nand/libocdflashnand.la
+	%D%/nor/libocdflashnor.la
 
 STARTUP_TCL_SRCS += %D%/startup.tcl
 
 include %D%/nor/Makefile.am
-include %D%/nand/Makefile.am

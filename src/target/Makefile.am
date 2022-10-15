@@ -4,9 +4,6 @@ else
 OOCD_TRACE_FILES =
 endif
 
-%C%_libtarget_la_LIBADD = %D%/openrisc/libopenrisc.la \
-	%D%/riscv/libriscv.la
-
 %C%_libtarget_la_CPPFLAGS = $(AM_CPPFLAGS)
 
 STARTUP_TCL_SRCS += %D%/startup.tcl
@@ -15,17 +12,7 @@ noinst_LTLIBRARIES += %D%/libtarget.la
 %C%_libtarget_la_SOURCES = \
 	$(TARGET_CORE_SRC) \
 	$(ARM_DEBUG_SRC) \
-	$(ARMV4_5_SRC) \
-	$(ARMV6_SRC) \
-	$(ARMV7_SRC) \
-	$(ARM_MISC_SRC) \
-	%D%/hla_target.c \
-	$(ARMV8_SRC)
-
-if HAVE_CAPSTONE
-%C%_libtarget_la_CPPFLAGS += $(CAPSTONE_CFLAGS)
-%C%_libtarget_la_LIBADD += $(CAPSTONE_LIBS)
-endif
+	$(ARMV7_SRC)
 
 TARGET_CORE_SRC = \
 	%D%/algorithm.c \
@@ -65,13 +52,10 @@ ARMV6_SRC = \
 	%D%/arm11_dbgtap.c
 
 ARMV7_SRC = \
+	%D%/armv4_5.c \
 	%D%/armv7m.c \
 	%D%/armv7m_trace.c \
 	%D%/cortex_m.c \
-	%D%/armv7a.c \
-	%D%/armv7a_mmu.c \
-	%D%/cortex_a.c \
-	%D%/ls1_sap.c \
 	%D%/mem_ap.c
 
 ARMV8_SRC = \
@@ -83,25 +67,15 @@ ARMV8_SRC = \
 	%D%/armv8_cache.c
 
 ARM_DEBUG_SRC = \
-	%D%/arm_dpm.c \
-	%D%/arm_jtag.c \
 	%D%/arm_disassembler.c \
-	%D%/arm_simulator.c \
 	%D%/arm_semihosting.c \
 	%D%/arm_adi_v5.c \
 	%D%/arm_dap.c \
-	%D%/armv7a_cache.c \
-	%D%/armv7a_cache_l2x.c \
-	%D%/adi_v5_dapdirect.c \
-	%D%/adi_v5_jtag.c \
 	%D%/adi_v5_swd.c \
-	%D%/embeddedice.c \
 	%D%/trace.c \
 	%D%/etb.c \
 	%D%/etm.c \
-	$(OOCD_TRACE_FILES) \
-	%D%/etm_dummy.c \
-	%D%/arm_cti.c
+	%D%/etm_dummy.c
 
 AVR32_SRC = \
 	%D%/avr32_ap7k.c \
@@ -250,6 +224,3 @@ ARC_SRC = \
 	%D%/arc_jtag.h \
 	%D%/arc_mem.h \
 	%D%/rtt.h
-
-include %D%/openrisc/Makefile.am
-include %D%/riscv/Makefile.am
